@@ -41,12 +41,24 @@ var MoodContract;
 var signer;
 
 provider.listAccounts().then(function(accounts) {
-    signer = provider.getSinger(accounts[0]);
+    signer = provider.getSigner(accounts[0]);
     MoodContract = new ethers.Contract(MoodContractAddress, MoodContractABI, signer);
 });
 
+async function getMood() {
+    getMoodPromise = MoodContract.getMood();
+    var Mood = await getMoodPromise;
+    console.log(Mood);
+}
 
-    </script>
+async function setMood() {
+    let mood = document.getElementById("mood").value;
+    setMoodPromise = MoodContract.setMood(mood);
+   await setMoodPromise;
+}
+
+
+</script>
     <body>
         <h1>This is my dApp!</h1>
         <p>Here we can set or get the mood:</p>
